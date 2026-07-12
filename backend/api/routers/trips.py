@@ -14,7 +14,7 @@ def get_trips(limit: Optional[int] = Query(None), db: Session = Depends(get_db))
     if limit:
         query = query.limit(limit)
     trips = query.all()
-    # Need to return populated objects for dashboard
+
     return {"data": [TripResponse.model_validate(t).model_dump(by_alias=True) for t in trips]}
 
 @router.post("", response_model=TripResponse)

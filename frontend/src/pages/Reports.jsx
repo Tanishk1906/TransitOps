@@ -13,13 +13,12 @@ const Reports = () => {
     }).catch(() => {}).finally(() => setIsLoading(false));
   }, []);
 
-  // Hackathon Pro-Tip: Vanilla JS CSV Export (No libraries needed)
   const exportCSV = () => {
     const headers = ['Vehicle', 'Total Revenue', 'Fuel Cost', 'Maint Cost', 'Distance', 'Fuel Used', 'Efficiency', 'ROI'];
     const rows = vehicleReports.map(v => [
       v.registrationNumber, v.revenue, v.fuelCost, v.maintCost, v.distance, v.fuelUsed, v.efficiency, v.roi
     ]);
-    
+
     const csvContent = [
       headers.join(','),
       ...rows.map(row => row.join(','))
@@ -41,7 +40,6 @@ const Reports = () => {
         <button className="btn btn-success" onClick={exportCSV}>⬇ Export CSV</button>
       </div>
 
-      {/* Summary Metrics */}
       <div className="kpi-grid">
         <div className="kpi-card" style={{borderLeftColor: '#dc3545'}}>
           <h3>Total Fuel Cost</h3>
@@ -61,7 +59,6 @@ const Reports = () => {
         </div>
       </div>
 
-      {/* Detailed Vehicle Breakdown */}
       <div className="card">
         <h3 style={{marginBottom: '15px'}}>Vehicle Profitability Breakdown</h3>
         <table>

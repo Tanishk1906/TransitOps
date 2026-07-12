@@ -14,7 +14,7 @@ def get_vehicles(status: Optional[str] = Query(None), db: Session = Depends(get_
     if status:
         query = query.filter(Vehicle.status == status)
     vehicles = query.all()
-    # Serialize to Pydantic objects so alias _id gets applied
+
     return {"data": [VehicleResponse.model_validate(v).model_dump(by_alias=True) for v in vehicles]}
 
 @router.post("", response_model=VehicleResponse)

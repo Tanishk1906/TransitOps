@@ -9,7 +9,7 @@ const Maintenance = () => {
 
   const fetchData = () => {
     api.get('/maintenance').then(res => setLogs(res.data.data)).catch(() => {});
-    // Business Rule: Only fetch 'Available' vehicles for maintenance dropdown
+
     api.get('/vehicles?status=Available').then(res => setAvailableVehicles(res.data.data)).catch(() => {});
   };
 

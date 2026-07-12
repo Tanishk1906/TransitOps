@@ -9,7 +9,7 @@ class RoleEnum(str, enum.Enum):
     driver = 'Driver'
     safety_officer = 'Safety Officer'
     financial_analyst = 'Financial Analyst'
-    dispatcher = 'Dispatcher' # Adding dispatcher as seen in UI
+    dispatcher = 'Dispatcher'
 
 class VehicleStatus(str, enum.Enum):
     available = 'Available'

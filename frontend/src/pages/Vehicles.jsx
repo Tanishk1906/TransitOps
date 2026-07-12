@@ -5,7 +5,7 @@ const Vehicles = () => {
   const [vehicles, setVehicles] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [newVehicle, setNewVehicle] = useState({
-    registrationNumber: '', nameModel: '', type: 'Van', 
+    registrationNumber: '', nameModel: '', type: 'Van',
     maxLoadCapacity: '', odometer: 0, acquisitionCost: ''
   });
 
@@ -24,7 +24,7 @@ const Vehicles = () => {
       setNewVehicle({ registrationNumber: '', nameModel: '', type: 'Van', maxLoadCapacity: '', odometer: 0, acquisitionCost: '' });
       fetchVehicles();
     } catch (error) {
-      // Business Rule: Unique Registration Number enforcement
+
       if (error.response?.status === 409) {
         alert('❌ Error: Registration Number already exists!');
       } else {

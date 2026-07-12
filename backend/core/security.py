@@ -8,8 +8,7 @@ from sqlalchemy.orm import Session
 from db.database import get_db
 from models.models import User
 
-# Configuration
-SECRET_KEY = "supersecretkey_transitops_hackathon" # Use env var in prod
+SECRET_KEY = "supersecretkey_transitops_hackathon"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
@@ -32,14 +31,11 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-# Since the frontend completely mocks login and sends 'mock_jwt_token_123',
-# we'll build this get_current_user to accept it for seamless integration.
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     if token == "mock_jwt_token_123":
-        # Return a mock user for the MVP
-        # In reality we'd decode the JWT and lookup the user.
+
         return User(id=1, email="admin@transitops.local", role="Fleet Manager")
-        
+
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -52,7 +48,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
             raise credentials_exception
     except jwt.PyJWTError:
         raise credentials_exception
-        
+
     user = db.query(User).filter(User.email == email).first()
     if user is None:
         raise credentials_exception

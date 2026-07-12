@@ -13,8 +13,7 @@ const Layout = () => {
         <div className="logo">🚛 TransitOps</div>
         <nav>
           <NavLink to="/dashboard" className={({isActive}) => isActive ? 'active' : ''}>Dashboard</NavLink>
-          
-          {/* Strict RBAC Routing in UI */}
+
           {['Fleet Manager', 'Admin'].includes(user.role) && <NavLink to="/vehicles">Vehicles</NavLink>}
           {['Safety Officer', 'Admin'].includes(user.role) && <NavLink to="/drivers">Drivers</NavLink>}
           {['Dispatcher', 'Admin'].includes(user.role) && <NavLink to="/trips">Trips</NavLink>}
@@ -29,7 +28,7 @@ const Layout = () => {
         </div>
       </aside>
       <main className="main-content">
-        <Outlet /> {/* This renders the active page (Dashboard, Vehicles, etc.) */}
+        <Outlet />
       </main>
     </div>
   );

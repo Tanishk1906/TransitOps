@@ -7,7 +7,6 @@ from models.models import RoleEnum, VehicleStatus, DriverStatus, TripStatus
 class BaseSchema(BaseModel):
     model_config = ConfigDict(populate_by_name=True, alias_generator=to_camel, from_attributes=True)
 
-# ----- User -----
 class UserCreate(BaseSchema):
     email: str
     password: str
@@ -23,7 +22,6 @@ class Token(BaseModel):
     token_type: str
     role: str
 
-# ----- Vehicle -----
 class VehicleBase(BaseSchema):
     registration_number: str
     name_model: str
@@ -39,7 +37,6 @@ class VehicleCreate(VehicleBase):
 class VehicleResponse(VehicleBase):
     id: int = Field(alias="_id")
 
-# ----- Driver -----
 class DriverBase(BaseSchema):
     name: str
     license_number: str
@@ -55,7 +52,6 @@ class DriverCreate(DriverBase):
 class DriverResponse(DriverBase):
     id: int = Field(alias="_id")
 
-# ----- Trip -----
 class TripBase(BaseSchema):
     source: str
     dest: str
@@ -63,11 +59,9 @@ class TripBase(BaseSchema):
     distance: float
 
 class TripCreate(TripBase):
-    vehicle: str # Frontend sends vehicle string or registration number, actually frontend sends "VAN-05" from select in Trips.jsx? 
-    driver: str # Frontend sends driver name "Alex".
-    # Wait, in the updated Dashboard.jsx, recentTrips has trip.vehicleId?.registrationNumber, implying backend returns populated object.
-    # We'll allow vehicle_id and driver_id in creation, but the frontend form in Trips.jsx was mocked.
-    # Wait, Trips.jsx is completely mocked so we don't have a definitive CREATE shape from it. We'll use standard ids.
+    vehicle: str
+    driver: str
+
     vehicle_id: int
     driver_id: int
 
@@ -76,11 +70,10 @@ class TripResponse(TripBase):
     vehicle_id: int
     driver_id: int
     status: TripStatus
-    # populated fields for dashboard
+
     vehicle: Optional[VehicleResponse] = None
     driver: Optional[DriverResponse] = None
 
-# ----- Maintenance -----
 class MaintenanceBase(BaseSchema):
     description: str
     cost: float = 0.0
@@ -93,9 +86,8 @@ class MaintenanceResponse(MaintenanceBase):
     vehicle_id: int
     start_date: datetime
     is_closed: bool
-    vehicle: Optional[VehicleResponse] = Field(None, alias="vehicleId") # Frontend accesses log.vehicleId?.registrationNumber
+    vehicle: Optional[VehicleResponse] = Field(None, alias="vehicleId")
 
-# ----- Expense -----
 class ExpenseBase(BaseSchema):
     type: str
     amount: float
@@ -110,6 +102,5 @@ class ExpenseResponse(ExpenseBase):
     vehicle_id: int
     vehicle: Optional[VehicleResponse] = Field(None, alias="vehicleId")
 
-# Generic Data Wrapper
 class DataResponse(BaseModel):
     data: list | dict | str | int | float

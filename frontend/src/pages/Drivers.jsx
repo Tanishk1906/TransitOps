@@ -5,7 +5,7 @@ const Drivers = () => {
   const [drivers, setDrivers] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [newDriver, setNewDriver] = useState({
-    name: '', licenseNumber: '', licenseCategory: 'Class C', 
+    name: '', licenseNumber: '', licenseCategory: 'Class C',
     licenseExpiryDate: '', contactNumber: ''
   });
 
@@ -27,7 +27,6 @@ const Drivers = () => {
     }
   };
 
-  // Helper to check if license is expired
   const isExpired = (date) => new Date(date) < new Date();
 
   return (
@@ -60,7 +59,7 @@ const Drivers = () => {
           <thead><tr><th>Name</th><th>License No.</th><th>Category</th><th>Expiry Date</th><th>Safety Score</th><th>Status</th></tr></thead>
           <tbody>
             {drivers.map(d => (
-              // Business Rule: Highlight row if license is expired
+
               <tr key={d._id} style={{ backgroundColor: isExpired(d.licenseExpiryDate) ? '#ffebee' : 'transparent' }}>
                 <td><strong>{d.name}</strong></td>
                 <td>{d.licenseNumber}</td><td>{d.licenseCategory}</td>

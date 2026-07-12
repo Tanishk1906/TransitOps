@@ -30,7 +30,7 @@ const Trips = () => {
   const handleDispatch = async (e) => {
     e.preventDefault();
     try {
-      // 1. Create the trip
+
       const createRes = await api.post('/trips', {
         ...newTrip,
         weight: parseFloat(newTrip.weight),
@@ -38,12 +38,11 @@ const Trips = () => {
         vehicleId: parseInt(newTrip.vehicleId),
         driverId: parseInt(newTrip.driverId)
       });
-      
+
       const tripId = createRes.data._id || createRes.data.id;
 
-      // 2. Dispatch it
       await api.post(`/trips/${tripId}/dispatch`);
-      
+
       alert("✅ Trip Dispatched! Vehicle & Driver status changed to 'On Trip'.");
       setShowForm(false);
       setNewTrip({ source: '', dest: '', vehicleId: '', driverId: '', weight: '', distance: '' });
@@ -76,7 +75,7 @@ const Trips = () => {
           <form onSubmit={handleDispatch} className="form-grid">
             <div className="form-group"><label>Source</label><input value={newTrip.source} onChange={e => setNewTrip({...newTrip, source: e.target.value})} required /></div>
             <div className="form-group"><label>Destination</label><input value={newTrip.dest} onChange={e => setNewTrip({...newTrip, dest: e.target.value})} required /></div>
-            
+
             <div className="form-group">
                 <label>Select Vehicle (Available Only)</label>
                 <select value={newTrip.vehicleId} onChange={e => setNewTrip({...newTrip, vehicleId: e.target.value})} required>
@@ -93,7 +92,7 @@ const Trips = () => {
             </div>
             <div className="form-group"><label>Cargo Weight (kg)</label><input type="number" value={newTrip.weight} onChange={e => setNewTrip({...newTrip, weight: e.target.value})} required /></div>
             <div className="form-group"><label>Distance (km)</label><input type="number" value={newTrip.distance} onChange={e => setNewTrip({...newTrip, distance: e.target.value})} required /></div>
-            
+
             <div className="full-width"><button type="submit" className="btn btn-success">Dispatch Trip</button></div>
           </form>
         </div>
